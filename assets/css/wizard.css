@@ -1,0 +1,281 @@
+/* ==============================================
+   AI Hairstyle Try-On Pro - Wizard Styles
+   Fully customizable – all elements have unique classes
+   ============================================== */
+
+/* Base Wizard Container */
+.ai-hairstyle-wizard {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    font-family: Arial, sans-serif;
+}
+
+/* Step Layout */
+.step-1-layout {
+    display: flex;
+    gap: 40px;
+    margin-top: 30px;
+}
+
+/* Left Column: Hairstyles List */
+.hairstyles-column {
+    width: 30%;
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.hairstyles-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.hairstyle-btn {
+    padding: 12px 20px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: left;
+    font-size: 16px;
+    transition: all 0.2s;
+}
+
+.hairstyle-btn:hover,
+.hairstyle-btn.active {
+    background: #0073aa;
+    color: white;
+    border-color: #0073aa;
+}
+
+/* Center Column: Upload Area */
+.upload-column {
+    width: 70%;
+    text-align: center;
+}
+
+.upload-container {
+    border: 3px dashed #0073aa;
+    border-radius: 16px;
+    padding: 40px;
+    background: #f0f8ff;
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.upload-placeholder p {
+    margin: 0;
+    font-size: 18px;
+    color: #555;
+}
+
+.upload-buttons,
+.upload-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+/* All Frontend Buttons: Blue Pill Shape */
+.upload-btn,
+.camera,
+.book-now-btn {
+    background: #0073aa;
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    font-size: 16px;
+    border-radius: 999px; /* Pill shape */
+    cursor: pointer;
+    transition: background 0.3s, transform 0.1s;
+    box-shadow: 0 4px 12px rgba(0,115,170,0.2);
+}
+
+.upload-btn:hover,
+.camera:hover,
+.book-now-btn:hover {
+    background: #005f8a;
+    transform: translateY(-2px);
+}
+
+.upload-btn:focus,
+.camera:focus,
+.book-now-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0,115,170,0.3);
+}
+
+.upload-btn:disabled,
+.camera:disabled,
+.book-now-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Book Now Button (slightly larger) */
+.book-now-btn {
+    padding: 18px 40px;
+    font-size: 20px;
+    margin-top: 40px;
+}
+
+/* Uploaded Images Grid */
+.uploaded-images-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 15px;
+    width: 100%;
+}
+
+/* Image with Delete Button (Delete stays white) */
+.image-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.uploaded-thumb {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.delete-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: white;
+    color: #333;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 24px;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    display: none;
+}
+
+.image-wrapper:hover .delete-btn {
+    display: block;
+}
+
+/* Generated AI Images (placeholders) */
+.generated-main {
+    width: 100%;
+    max-height: 500px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.generated-thumbs {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.generated-thumb {
+    width: 120px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Hide class */
+.hidden {
+    display: none !important;
+}
+
+/* Legacy classes (kept for future reference) */
+.ai-hairstyle-wizard-container { max-width: 1200px; margin: 0 auto; padding: 20px; font-family: Arial, sans-serif; }
+.ai-step { display: none; }
+.ai-step.ai-active { display: block; }
+.ai-step-title { text-align: center; }
+.ai-upload-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.ai-btn { padding: 12px 24px; margin: 10px; cursor: pointer; }
+.ai-price-display { font-size: 1.5em; font-weight: bold; text-align: center; }
+.ai-next-available-banner { background: #e0ffe0; padding: 15px; text-align: center; font-weight: bold; }
+
+/* Ensure placeholders display correctly and are clickable */
+.generated-main {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    display: block;
+    object-fit: cover;
+}
+
+.generated-thumbs {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.generated-thumb {
+    width: 200px;
+    height: 300px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    object-fit: cover;
+}
+
+.generated-thumb:hover {
+    transform: scale(1.05);
+}
+
+/* Hide upload buttons when placeholders are shown */
+#uploaded-images:contains('.generated-main') + .upload-buttons {
+    display: none;
+}
+
+/* Pill-shaped hairstyle buttons */
+.hairstyle-btn {
+    background: #0073aa; /* Blue */
+    color: white;
+    border: none;
+    border-radius: 50px; /* Pill shape */
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+    margin: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    text-align: center;
+    min-width: 120px;
+}
+
+.hairstyle-btn:hover {
+    background: #005f8a; /* Darker blue on hover */
+    transform: translateY(-2px);
+}
+
+.hairstyle-btn.active {
+    background: #004c6d; /* Even darker when selected */
+    box-shadow: 0 0 0 4px rgba(0,115,170,0.3);
+}
+
+/* Grid for buttons */
+.hairstyles-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 12px;
+    padding: 16px 0;
+}

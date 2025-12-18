@@ -1,0 +1,206 @@
+/* AI Hairstyle Try-On Pro – Admin Styles */
+/* Highly customizable – all classes/IDs listed in Configuration tab */
+
+/* General Metabox Improvements */
+.postbox .inside { 
+    padding: 20px !important; 
+    background: #fff;
+}
+.postbox h2.hndle {
+    font-size: 16px;
+    padding: 12px 16px;
+}
+
+/* Repeatable Tables (Variants, Products, Blocked Slots) */
+.repeatable-wrapper {
+    margin: 32px 0 48px;
+}
+.repeatable-wrapper > table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #fff;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.09);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 24px;
+}
+.repeatable-wrapper thead th {
+    background: #f8f9fa;
+    padding: 18px 14px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 14px;
+    border-bottom: 2px solid #c3c4c7;
+}
+.repeatable-wrapper td {
+    padding: 18px 14px;
+    border-bottom: 1px solid #e2e4e7;
+    vertical-align: middle;
+    text-align: center;
+}
+.repeatable-wrapper tr:last-child td { 
+    border-bottom: none; 
+}
+.repeatable-wrapper tr.committed td { 
+    background: #fcfcfc; 
+}
+
+/* Inputs – full rounded, centered */
+.repeatable-wrapper td input.regular-text,
+.repeatable-wrapper td textarea {
+    border-radius: 8px !important;
+    margin-bottom: 12px;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+/* Image Previews */
+.variant-thumb-preview,
+.upsell-image {
+    width: 100px; 
+    height: 100px; 
+    object-fit: cover; 
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    margin: 6px auto;
+    display: block;
+}
+#main-gallery-preview img {
+    width: 175px; 
+    height: 175px; 
+    object-fit: cover; 
+    border-radius: 10px;
+    margin: 10px; 
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+/* Buttons */
+.repeatable-wrapper .actions-cell .button {
+    margin: 0 6px 8px 0 !important;
+    border-radius: 6px;
+    padding: 7px 14px;
+    font-size: 13px;
+}
+.repeatable-wrapper .ai-remove-row {
+    background: #d63638 !important;
+    color: #fff !important;
+    border: none;
+}
+.repeatable-wrapper .ai-remove-row:hover {
+    background: #b32d2e !important;
+}
+.ai-add-row,
+.ai-add-blocked {
+    padding: 14px 24px;
+    background: #2271b1;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(34,113,177,0.25);
+}
+.ai-add-row:hover,
+.ai-add-blocked:hover {
+    background: #135e96;
+}
+
+/* Weekly Hours Table */
+.ai-weekly-hours th,
+.ai-weekly-hours td {
+    padding: 12px;
+    text-align: center;
+}
+.ai-weekly-hours th {
+    text-align: left;
+}
+
+/* Blocked Slots */
+.ai-blocked-slots td {
+    text-align: center;
+}
+.ai-datetime-picker {
+    width: 180px;
+}
+
+/* Staff Photo Preview */
+#ai-staff-photo-preview img {
+    max-width: 200px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Template Row Hide */
+.template-row {
+    display: none !important;
+}
+
+/* Horizontal Layouts */
+.form-table tr {
+    vertical-align: top;
+}
+
+/* Custom Class List for Configuration Tab (copy-paste ready) */
+.ai-hairstyle-admin-note {
+    background: #f0f8ff;
+    padding: 12px;
+    border-left: 4px solid #2271b1;
+    margin: 20px 0;
+    font-style: italic;
+}
+
+.ai-weekly-hours-table select.ai-time-select {
+    width: 140px;
+    height: 38px;
+    border-radius: 6px;
+}
+.ai-blocked-slots-table select {
+    width: 100%;
+    height: 40px;
+    border-radius: 6px;
+}
+.ai-blocked-slots-table th {
+    background: #f8f9fa;
+    font-weight: 600;
+}
+.ai-add-blocked-slot {
+    margin-top: 12px !important;
+}
+
+.ai-blocked-slots-table input.ai-blocked-date,
+.ai-blocked-slots-table select.ai-blocked-time {
+    width: 100%;
+    margin-bottom: 8px;
+    border-radius: 6px;
+}
+.ai-blocked-slots-table td {
+    vertical-align: top;
+}
+
+.ai-blocked-slots-table input.ai-blocked-date,
+.ai-blocked-slots-table select {
+    width: 100%;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    height: 40px;
+}
+.ai-blocked-slots-table td {
+    vertical-align: top;
+}
+
+.ai-blocked-slots-table .ai-blocked-date {
+    width: 100%;
+    margin-bottom: 8px;
+    border-radius: 6px;
+}
+.ai-blocked-slots-table .ai-blocked-time-start,
+.ai-blocked-slots-table .ai-blocked-time-end {
+    width: 100%;
+    height: 40px;
+    border-radius: 6px;
+}
