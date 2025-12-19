@@ -1,6 +1,14 @@
 # AI Hairstyle Try-On Pro Plugin
 
-Standalone WordPress plugin for AI hairstyle try-on and salon booking.
+Standalone WordPress plugin for AI hairstyle try-on and salon booking using Google Gemini API.
+
+## Features
+- Single-page AJAX wizard for photo uploads, hairstyle selection, color changes, and booking.
+- AI generation with 4 angles (front/left/right/back).
+- Custom booking calendar with next-available, deposit, coupons.
+- Admin CPTs for hairstyles (auto-populated from assets) and staff.
+- Analytics, emails, GDPR-compliant temp files.
+- Elementor widget for unlock.
 
 ## Architecture Diagrams
 - [Level 1 - System Context](docs/diagrams/level1.png)
@@ -12,12 +20,14 @@ Standalone WordPress plugin for AI hairstyle try-on and salon booking.
 2. Activate in WordPress admin.
 3. Add shortcode `[ai-hairstyle-tryon-pro]` to any page.
 
-## Features
-- AI generation with Google Gemini
-- Custom booking calendar
-- Admin CPTs for hairstyles/staff
-- GDPR-compliant temp files
-- Elementor widget for unlock
+## Configuration
+- Go to WordPress Admin > AI Hairstyle Try-On Pro.
+- Set API key, salon info, colors, coupons, etc.
+
+## Requirements
+- WordPress 5.0+
+- PHP 8.0+
+- Google Gemini API key
 
 ## Final Admin Backend Reference (Locked & Complete)
 
@@ -86,4 +96,5 @@ This is the definitive guide to all admin tabs, CPTs, metaboxes, and their front
 - Hairstyles CPT: Category field + "Popular" flag (auto from analytics).
 - Staff CPT: Commission % + "Specialty" tags.
 
-
+## License
+GPLv2 or later.

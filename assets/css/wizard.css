@@ -1,281 +1,274 @@
-/* ==============================================
-   AI Hairstyle Try-On Pro - Wizard Styles
-   Fully customizable – all elements have unique classes
-   ============================================== */
-
-/* Base Wizard Container */
-.ai-hairstyle-wizard {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px 20px;
-    font-family: Arial, sans-serif;
+/* Wizard container */
+.ai-hairstyle-wizard-container {
+    max-width: 900px !important;
+    margin: 40px auto !important;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    background: #fff !important;
+    border-radius: 12px !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important;
+    overflow: hidden !important;
 }
 
-/* Step Layout */
-.step-1-layout {
-    display: flex;
-    gap: 40px;
-    margin-top: 30px;
+/* Progress bar */
+.ai-wizard-progress-bar {
+    height: 6px !important;
+    background: #f0f0f0 !important;
+}
+.ai-progress-fill {
+    height: 100% !important;
+    width: 20% !important;
+    background: #6c5ce7 !important;
+    transition: width 0.4s ease !important;
 }
 
-/* Left Column: Hairstyles List */
-.hairstyles-column {
-    width: 30%;
-    background: #f9f9f9;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+/* Steps */
+.ai-wizard-step {
+    display: none !important;
+    padding: 40px !important;
+}
+.ai-step-active {
+    display: block !important;
+}
+.ai-step-title {
+    text-align: center !important;
+    margin-bottom: 40px !important;
+    font-size: 28px !important;
+    color: #2d3436 !important;
 }
 
-.hairstyles-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+/* Upload main container */
+.ai-upload-main-container {
+    max-width: 600px !important;
+    margin: 0 auto !important;
 }
 
-.hairstyle-btn {
-    padding: 12px 20px;
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    cursor: pointer;
-    text-align: left;
-    font-size: 16px;
-    transition: all 0.2s;
+/* Main upload box – ZERO padding for edge-to-edge image fit */
+.ai-upload-main-box {
+    position: relative !important;
+    border: 3px dashed #ddd !important;
+    border-radius: 12px !important;
+    height: 400px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #f8f9fa !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+}
+.ai-upload-main-box:hover {
+    border-color: #6c5ce7 !important;
 }
 
-.hairstyle-btn:hover,
-.hairstyle-btn.active {
-    background: #0073aa;
-    color: white;
-    border-color: #0073aa;
+/* Placeholder – perfectly centred */
+.ai-upload-placeholder {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    width: 100% !important;
+    height: 100% !important;
+    pointer-events: none !important;
+    padding: 40px !important;
+}
+.ai-upload-placeholder p {
+    margin: 0 0 32px 0 !important;
+    color: #636e72 !important;
+    font-size: 20px !important;
+    line-height: 1.4 !important;
 }
 
-/* Center Column: Upload Area */
-.upload-column {
-    width: 70%;
-    text-align: center;
+/* Buttons INSIDE the dashed box – visible only when NO photo uploaded */
+.ai-upload-buttons {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 32px !important;
+    flex-wrap: wrap !important;
+    width: 100% !important;
+    pointer-events: auto !important;
+    z-index: 20 !important;
 }
 
-.upload-container {
-    border: 3px dashed #0073aa;
-    border-radius: 16px;
-    padding: 40px;
-    background: #f0f8ff;
-    min-height: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.upload-placeholder p {
-    margin: 0;
-    font-size: 18px;
-    color: #555;
-}
-
-.upload-buttons,
-.upload-actions {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    margin: 20px 0;
-}
-
-/* All Frontend Buttons: Blue Pill Shape */
-.upload-btn,
-.camera,
-.book-now-btn {
-    background: #0073aa;
-    color: white;
-    border: none;
-    padding: 14px 28px;
-    font-size: 16px;
-    border-radius: 999px; /* Pill shape */
-    cursor: pointer;
-    transition: background 0.3s, transform 0.1s;
-    box-shadow: 0 4px 12px rgba(0,115,170,0.2);
-}
-
-.upload-btn:hover,
-.camera:hover,
-.book-now-btn:hover {
-    background: #005f8a;
-    transform: translateY(-2px);
-}
-
-.upload-btn:focus,
-.camera:focus,
-.book-now-btn:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(0,115,170,0.3);
-}
-
-.upload-btn:disabled,
-.camera:disabled,
-.book-now-btn:disabled {
-    background: #ccc;
-    cursor: not-allowed;
-    transform: none;
-}
-
-/* Book Now Button (slightly larger) */
-.book-now-btn {
-    padding: 18px 40px;
-    font-size: 20px;
-    margin-top: 40px;
-}
-
-/* Uploaded Images Grid */
-.uploaded-images-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 15px;
-    width: 100%;
-}
-
-/* Image with Delete Button (Delete stays white) */
-.image-wrapper {
-    position: relative;
-    display: inline-block;
-}
-
-.uploaded-thumb {
-    width: 100%;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-.delete-btn {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    background: white;
-    color: #333;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    text-align: center;
-    line-height: 24px;
-    font-size: 18px;
-    cursor: pointer;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-    display: none;
-}
-
-.image-wrapper:hover .delete-btn {
-    display: block;
-}
-
-/* Generated AI Images (placeholders) */
-.generated-main {
-    width: 100%;
-    max-height: 500px;
-    object-fit: cover;
-    border-radius: 12px;
-    margin-bottom: 20px;
-}
-
-.generated-thumbs {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-}
-
-.generated-thumb {
-    width: 120px;
-    height: 160px;
-    object-fit: cover;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-/* Hide class */
-.hidden {
+/* Force hide internal buttons when image exists */
+.ai-upload-main-box.has-image .ai-upload-buttons {
     display: none !important;
 }
 
-/* Legacy classes (kept for future reference) */
-.ai-hairstyle-wizard-container { max-width: 1200px; margin: 0 auto; padding: 20px; font-family: Arial, sans-serif; }
-.ai-step { display: none; }
-.ai-step.ai-active { display: block; }
-.ai-step-title { text-align: center; }
-.ai-upload-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-.ai-btn { padding: 12px 24px; margin: 10px; cursor: pointer; }
-.ai-price-display { font-size: 1.5em; font-weight: bold; text-align: center; }
-.ai-next-available-banner { background: #e0ffe0; padding: 15px; text-align: center; font-weight: bold; }
-
-/* Ensure placeholders display correctly and are clickable */
-.generated-main {
-    width: 100%;
-    max-width: 600px;
-    height: auto;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    display: block;
-    object-fit: cover;
+/* Buttons BELOW the box – hidden by default, show only when photo uploaded */
+.ai-additional-buttons {
+    display: none !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 32px !important;
+    flex-wrap: wrap !important;
+    margin-top: 20px !important;
+    width: 100% !important;
+    z-index: 20 !important;
 }
 
-.generated-thumbs {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    flex-wrap: wrap;
+/* Show additional buttons when image exists */
+.ai-upload-main-box.has-image ~ .ai-additional-buttons {
+    display: flex !important;
 }
 
-.generated-thumb {
-    width: 200px;
-    height: 300px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-    object-fit: cover;
+.ai-upload-buttons button,
+.ai-additional-buttons button {
+    background: #6c5ce7 !important;
+    color: white !important;
+    border: none !important;
+    padding: 16px 36px !important;
+    border-radius: 12px !important;
+    font-size: 17px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: background 0.3s ease !important;
+    pointer-events: auto !important;
+}
+.ai-upload-buttons button:hover,
+.ai-additional-buttons button:hover:not(:disabled) {
+    background: #5a4fcf !important;
+}
+.ai-upload-buttons button:disabled,
+.ai-additional-buttons button:disabled {
+    background: #b2bec3 !important;
+    cursor: not-allowed !important;
 }
 
-.generated-thumb:hover {
-    transform: scale(1.05);
+/* Main preview – FULL edge-to-edge fill */
+.ai-main-preview {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 10 !important;
+    pointer-events: none !important;
+}
+.ai-main-preview img {
+    max-width: 100% !important;
+    max-height: 100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    border-radius: 8px !important;
+    pointer-events: auto !important;
 }
 
-/* Hide upload buttons when placeholders are shown */
-#uploaded-images:contains('.generated-main') + .upload-buttons {
-    display: none;
+/* Delete button – GUARANTEED perfect 20px circle, X perfectly centred */
+.ai-delete-main,
+.ai-delete-thumb {
+    position: absolute !important;
+    top: -10px !important;
+    right: -10px !important;
+    width: 20px !important;
+    height: 20px !important;
+    background: #ffffff !important;
+    color: #b2bec3 !important;
+    border: 2px solid #b2bec3 !important;
+    border-radius: 50% !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    line-height: 1 !important; /* No line-height interference */
+    text-align: center !important;
+    cursor: pointer !important;
+    opacity: 0 !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+    z-index: 50 !important;
+    pointer-events: auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important; /* Critical: include border in dimensions */
 }
 
-/* Pill-shaped hairstyle buttons */
-.hairstyle-btn {
-    background: #0073aa; /* Blue */
-    color: white;
-    border: none;
-    border-radius: 50px; /* Pill shape */
-    padding: 12px 20px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s ease, transform 0.2s ease;
-    margin: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    text-align: center;
-    min-width: 120px;
+/* Only show delete button when hovering over the actual preview image or thumbnail image */
+.ai-main-preview:hover ~ .ai-delete-main,
+.ai-main-preview:hover .ai-delete-main,
+.ai-thumbnail:hover .ai-delete-thumb {
+    opacity: 1 !important;
+    transform: translateY(-3px) !important;
 }
 
-.hairstyle-btn:hover {
-    background: #005f8a; /* Darker blue on hover */
-    transform: translateY(-2px);
+/* Hover effect – subtle darken */
+.ai-delete-main:hover,
+.ai-delete-thumb:hover {
+    background: #f5f5f5 !important;
+    color: #999 !important;
+    border-color: #999 !important;
 }
 
-.hairstyle-btn.active {
-    background: #004c6d; /* Even darker when selected */
-    box-shadow: 0 0 0 4px rgba(0,115,170,0.3);
+/* Ensure parents allow overlap and do not clip the button */
+.ai-upload-main-box,
+.ai-thumbnail {
+    overflow: visible !important;
+    position: relative !important;
 }
 
-/* Grid for buttons */
-.hairstyles-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    gap: 12px;
-    padding: 16px 0;
+/* Thumbnails row */
+.ai-thumbnails-row {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 20px !important;
+    margin: 40px 0 20px !important;
+    flex-wrap: wrap !important;
+}
+.ai-thumbnail {
+    position: relative !important;
+    width: 100px !important;
+    height: 100px !important;
+    border: 2px solid #ddd !important;
+    border-radius: 12px !important;
+    overflow: visible !important;
+    cursor: pointer !important;
+    transition: transform 0.2s ease !important;
+}
+.ai-thumbnail:hover {
+    transform: scale(1.05) !important;
+}
+.ai-thumbnail img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    border-radius: 10px !important;
+}
+
+/* Navigation */
+.ai-wizard-navigation {
+    text-align: center !important;
+    margin-top: 50px !important;
+}
+.ai-btn-next {
+    background: #6c5ce7 !important;
+    color: white !important;
+    border: none !important;
+    padding: 16px 48px !important;
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    border-radius: 12px !important;
+    cursor: pointer !important;
+    transition: background 0.3s ease !important;
+}
+.ai-btn-next:hover:not(:disabled) {
+    background: #5a4fcf !important;
+}
+.ai-btn-next:disabled {
+    background: #b2bec3 !important;
+    cursor: not-allowed !important;
+}
+
+/* Hairstyle grid placeholder (Step 2) */
+.ai-hairstyle-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important;
+    gap: 20px !important;
 }

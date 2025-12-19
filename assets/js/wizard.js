@@ -1,197 +1,136 @@
-/**
- * AI Hairstyle Try-On Pro – Frontend Wizard JavaScript
- * Handles multi-step wizard, photo uploads, hairstyle selection via AJAX, and placeholder display
- * All logic is modular, heavily commented, and uses vanilla jQuery for compatibility
- */
-
 jQuery(document).ready(function($) {
-    // Cache frequently used DOM elements
-    const wizardContainer = $('#ai-hairstyle-tryon-pro');
-    const step1 = $('#step-1');
-    const uploadedGrid = $('#uploaded-images');
-    const hairstyleGrid = $('#hairstyle-grid');
-    const mainUploadBtn = $('#main-upload-btn');
-    const secondaryUploadBtn = $('#secondary-upload-btn');
-    const cameraBtn = $('#camera-btn');
-    const bookNowBtn = $('#book-now-btn');
-    const selectedHairstyleInput = $('#selected_hairstyle_id');
-    const genderTabs = $('.gender-tab');
+    const wizard = $('#ai-hairstyle-wizard');
+    if (!wizard.length) return;
 
-    // State variables
-    let uploadedFiles = [];
-    const maxUploads = 4;
-    let selectedHairstyleId = null;
+    let images = []; // Array of { id: unique, src: dataURL }
+    let mainImageId = null;
+    const maxImages = 4;
 
-    // Helper: Clear generated placeholder images
-    function clearGeneratedImages() {
-        uploadedGrid.find('.generated-main, .generated-thumbs').remove();
-    }
+    // Hidden file inputs
+    const cameraInput = $('<input type="file" accept="image/*" capture="environment" style="display:none;">');
+    const galleryInput = $('<input type="file" accept="image/*" style="display:none;">');
+    wizard.append(cameraInput, galleryInput);
 
-    // Helper: Display 4 placeholder images (front + 3 thumbs)
-    function showStylePlaceholders() {
-        clearGeneratedImages();
+    // Bind buttons
+    $('.ai-btn-camera, .ai-btn-camera-small').on('click', () => cameraInput.trigger('click'));
+    $('.ai-btn-gallery, .ai-btn-gallery-small').on('click', () => galleryInput.trigger('click'));
 
-        // Main front view
-        const mainImg = $('<img>', {
-            src: 'https://via.placeholder.com/600x800/0073aa/fff?text=Front+View+with+New+Style',
-            alt: 'Front view with selected hairstyle',
-            class: 'generated-main'
-        });
-        uploadedGrid.append(mainImg);
-
-        // Thumbnail container
-        const thumbContainer = $('<div>', { class: 'generated-thumbs' });
-        const thumbs = [
-            { src: 'https://via.placeholder.com/200x300/0073aa/fff?text=Left+Side',   alt: 'Left side view' },
-            { src: 'https://via.placeholder.com/200x300/0073aa/fff?text=Right+Side',  alt: 'Right side view' },
-            { src: 'https://via.placeholder.com/200x300/0073aa/fff?text=Back+View',   alt: 'Back view' }
-        ];
-
-        thumbs.forEach(thumb => {
-            thumbContainer.append($('<img>', {
-                src: thumb.src,
-                alt: thumb.alt,
-                class: 'generated-thumb'
-            }));
-        });
-
-        uploadedGrid.append(thumbContainer);
-    }
-
-    // Step 1: Load hairstyles via AJAX
-    function loadHairstyles(gender = 'women') {
-        hairstyleGrid.html('<div class="loading">Loading styles...</div>');
-
-        $.ajax({
-            url: aiHairstyleData.ajax_url,
-            type: 'POST',
-            data: {
-                action: 'load_hairstyles',
-                gender: gender,
-                nonce: aiHairstyleData.nonce
-            },
-            success: function(response) {
-                if (response.success && response.data.hairstyles.length > 0) {
-                    hairstyleGrid.empty();
-                    response.data.hairstyles.forEach(style => {
-                        const btn = $('<button>', {
-                            class: 'hairstyle-btn',
-                            'data-id': style.id,
-                            text: style.title  // Just text – no image
-                        });
-                        hairstyleGrid.append(btn);
-                    });
-                } else {
-                    hairstyleGrid.html('<p>No styles available yet. Add some in the admin panel.</p>');
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error('AJAX error loading hairstyles:', error);
-                hairstyleGrid.html('<p>Error loading styles. Please refresh the page.</p>');
-            }
-        });
-    }
-
-    // Initial load (default to women if both genders enabled)
-    loadHairstyles();
-
-    // Gender tab switching (if enabled)
-    genderTabs.on('click', function() {
-        genderTabs.removeClass('active');
-        $(this).addClass('active');
-        const gender = $(this).data('gender'); // 'men' or 'women'
-        loadHairstyles(gender);
-    });
-
-    // Upload photos (1–4)
-    $(document).on('click', '#main-upload-btn, #secondary-upload-btn', function(e) {
-        e.preventDefault();
-        const input = $('<input>', {
-            type: 'file',
-            accept: 'image/*',
-            multiple: true,
-            class: 'hidden'
-        }).on('change', function() {
-            const files = Array.from(this.files);
-            files.forEach(file => {
-                if (uploadedFiles.length < maxUploads) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        const img = $('<img>', {
-                            src: e.target.result,
-                            alt: 'Uploaded photo',
-                            class: 'uploaded-preview'
-                        });
-                        const wrapper = $('<div>', { class: 'upload-item' })
-                            .append(img)
-                            .append($('<button>', {
-                                type: 'button',
-                                class: 'remove-upload',
-                                text: '×'
-                            }));
-                        uploadedGrid.append(wrapper);
-                        uploadedFiles.push(file);
-                        if (uploadedFiles.length >= maxUploads) {
-                            mainUploadBtn.addClass('hidden');
-                            secondaryUploadBtn.addClass('hidden');
-                            cameraBtn.addClass('hidden');
-                        }
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
-            this.value = ''; // Reset input
-        }).click();
-    });
-
-    // Remove uploaded photo
-    $(document).on('click', '.remove-upload', function() {
-        const wrapper = $(this).closest('.upload-item');
-        const index = wrapper.index();
-        uploadedFiles.splice(index, 1);
-        wrapper.remove();
-
-        // Re-show upload buttons if under max
-        if (uploadedFiles.length < maxUploads) {
-            mainUploadBtn.removeClass('hidden');
-            secondaryUploadBtn.removeClass('hidden');
-            cameraBtn.removeClass('hidden');
+    // File change handler
+    cameraInput.add(galleryInput).on('change', function(e) {
+        if (e.target.files.length && images.length < maxImages) {
+            handleFile(e.target.files[0]);
         }
     });
 
-    // Hairstyle selection
-    $(document).on('click', '.hairstyle-btn', function() {
-        $('.hairstyle-btn').removeClass('active');
-        $(this).addClass('active');
+    function handleFile(file) {
+        if (!file.type.match('image.*')) return;
 
-        const styleId = $(this).data('id');
-        selectedHairstyleInput.val(styleId);
-        selectedHairstyleId = styleId;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const id = Date.now() + Math.random();
+            images.push({ id, src: e.target.result });
 
-        // Clear uploads and show placeholders
-        uploadedGrid.empty();
-        uploadedFiles = [];
-        mainUploadBtn.addClass('hidden');
-        secondaryUploadBtn.addClass('hidden');
-        cameraBtn.addClass('hidden');
+            if (!mainImageId) {
+                mainImageId = id;
+            }
 
-        showStylePlaceholders();
+            renderImages();
+            updateButtons();
+            checkNextButton();
+        };
+        reader.readAsDataURL(file);
+    }
 
-        bookNowBtn.prop('disabled', false);
+    function renderImages() {
+        const mainBox = $('.ai-upload-main-box');
+        const mainPreview = $('.ai-main-preview');
 
-        // Scroll to generated images
-        $('html, body').animate({ scrollTop: uploadedGrid.offset().top - 50 }, 500);
+        // Main preview
+        const mainImg = images.find(img => img.id === mainImageId);
+        if (mainImg) {
+            mainPreview.html(`<img src="${mainImg.src}" alt="Main">`);
+            $('.ai-upload-placeholder').hide();
+            mainBox.addClass('has-image');
+        } else {
+            mainPreview.empty();
+            $('.ai-upload-placeholder').show();
+            mainBox.removeClass('has-image');
+        }
+
+        // Thumbnails
+        const thumbsHtml = images.filter(img => img.id !== mainImageId)
+            .map(img => `
+                <div class="ai-thumbnail" data-id="${img.id}">
+                    <img src="${img.src}" alt="Thumbnail">
+                    <button class="ai-delete-thumb" data-id="${img.id}">×</button>
+                </div>
+            `).join('');
+        $('.ai-thumbnails-row').html(thumbsHtml || '<div></div>');
+
+        // Bind thumbnail clicks (swap with main)
+        $('.ai-thumbnail').off('click').on('click', function() {
+            const thumbId = $(this).data('id');
+            const oldMainId = mainImageId;
+            mainImageId = thumbId;
+            renderImages();
+            bindDeleteButtons();
+        });
+
+        bindDeleteButtons();
+    }
+
+    function bindDeleteButtons() {
+        $('.ai-delete-main').off('click').on('click', deleteMain);
+        $('.ai-delete-thumb').off('click').on('click', function(e) {
+            e.stopPropagation();
+            const id = $(this).data('id');
+            deleteImage(id);
+        });
+    }
+
+    function deleteMain() {
+        if (!mainImageId) return;
+        deleteImage(mainImageId);
+    }
+
+    function deleteImage(id) {
+        images = images.filter(img => img.id !== id);
+        if (mainImageId === id) {
+            mainImageId = images[0] ? images[0].id : null;
+        }
+        renderImages();
+        updateButtons();
+        checkNextButton();
+
+        // Reset file inputs to allow re-uploading the same image
+        cameraInput.val('');
+        galleryInput.val('');
+    }
+
+    function updateButtons() {
+        const atMax = images.length >= maxImages;
+        $('.ai-btn-camera, .ai-btn-gallery, .ai-btn-camera-small, .ai-btn-gallery-small')
+            .prop('disabled', atMax);
+    }
+
+    function checkNextButton() {
+        $('.ai-btn-next').prop('disabled', images.length === 0);
+    }
+
+    // Next button step navigation
+    $('.ai-btn-next').on('click', () => {
+        if (images.length === 0) return;
+        const current = $('.ai-wizard-step.ai-step-active');
+        const next = current.next('.ai-wizard-step');
+        if (next.length) {
+            current.removeClass('ai-step-active');
+            next.addClass('ai-step-active');
+            $('.ai-progress-fill').css('width', (parseInt(next.data('step')) / 5 * 100) + '%');
+        }
     });
 
-    // Reset wizard
-    $('#reset-wizard').on('click', function() {
-        uploadedGrid.empty();
-        uploadedFiles = [];
-        $('.hairstyle-btn').removeClass('active');
-        selectedHairstyleInput.val('');
-        mainUploadBtn.removeClass('hidden');
-        secondaryUploadBtn.removeClass('hidden');
-        cameraBtn.removeClass('hidden');
-        bookNowBtn.prop('disabled', true);
-    });
+    // Initial state
+    renderImages();
+    updateButtons();
+    checkNextButton();
 });
